@@ -19,7 +19,7 @@ import java.math.BigDecimal;
  * @author tangyin@belink.com
  * @version V1.0
  * @title
- * @description
+ * @description 事务测试
  * @date 2022-08-02 21:10
  */
 @Service
