@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.order.mapper.OrderIndexMapper" >
+
+    <resultMap id="result" type="com.example.order.bean.OrderIndexPO">
+        <id property="id" column="id"></id>
+        <result property="transOrderId" column="trans_order_id"></result>
+        <result property="txAmt" column="tx_amt"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="modifyTime" column="modify_time"></result>
+
+    </resultMap>
+
+    <sql id="base_column">
+        id,trans_order_id,tx_amt,create_time,modify_time
+    </sql>
+
+    <select id="findById"  resultMap="result" parameterType="integer">
+        SELECT * FROM t_trans_order_index WHERE id = #{id}
+    </select>
+
+
+    <insert id="insertOrderIndex" parameterType="com.example.order.bean.OrderIndexPO">
+        insert into t_trans_order_index
+             (trans_order_id,tx_amt)
+        values (#{transOrderId},#{txAmt})
+    </insert>
+
+</mapper>

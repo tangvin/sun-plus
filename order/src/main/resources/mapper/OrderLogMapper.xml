@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.order.mapper.OrderLogMapper">
+
+    <resultMap id="result" type="com.example.order.bean.OrderLogPO">
+        <id property="id" column="id"></id>
+        <result property="transOrderId" column="trans_order_id"></result>
+        <result property="optType" column="opt_type"></result>
+        <result property="txAmt" column="tx_amt"></result>
+        <result property="createTime" column="create_time"></result>
+    </resultMap>
+
+    <sql id="base_column">
+        id ,trans_order_id,opt_type,tx_amt,create_time
+    </sql>
+
+    <select id="findById" resultMap="result" parameterType="integer">
+        SELECT *
+        FROM t_trans_order_log
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insertTransLog" parameterType="com.example.order.bean.OrderLogPO">
+        insert into t_trans_order_log
+            (trans_order_id,opt_type,tx_amt)
+        values (#{transOrderId},#{optType},#{txAmt})
+    </insert>
+
+</mapper>
