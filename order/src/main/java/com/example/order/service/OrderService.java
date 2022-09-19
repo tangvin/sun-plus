@@ -2,9 +2,11 @@ package com.example.order.service;
 
 import com.example.order.bean.OrderDetailsInfoPO;
 
+import java.util.Map;
+
 public interface OrderService {
 
 	OrderDetailsInfoPO findById(Integer id);
 
-	int addTransOrderInfo();
+	Map<String,String> addTransOrderInfo();
 }

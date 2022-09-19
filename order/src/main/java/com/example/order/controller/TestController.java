@@ -34,8 +34,9 @@ public class TestController {
     }
 
     @RequestMapping("/testTransaction")
-    public void testTransaction() {
+    public String testTransaction() {
          transactionService.invoke();
+         return "ok";
     }
 
 

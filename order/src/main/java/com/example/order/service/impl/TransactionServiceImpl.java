@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
+
 /**
  * @author tangyin@belink.com
  * @version V1.0
@@ -26,8 +28,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void invoke() {
-        int i = orderService.addTransOrderInfo();
-        System.out.println("========i========="+i);
+        Map<String, String> resultMap = orderService.addTransOrderInfo();
+        System.out.println("========resultMap========="+resultMap);
 //        int j = orderLogService.addTransOrderLog();
 //        System.out.println("==========j====="+j);
     }

@@ -8,10 +8,11 @@
         <result property="optType" column="opt_type"></result>
         <result property="txAmt" column="tx_amt"></result>
         <result property="createTime" column="create_time"></result>
+        <result property="resultMsg" column="result_msg"></result>
     </resultMap>
 
     <sql id="base_column">
-        id ,trans_order_id,opt_type,tx_amt,create_time
+        id ,trans_order_id,opt_type,tx_amt,create_time,result_msg
     </sql>
 
     <select id="findById" resultMap="result" parameterType="integer">
@@ -22,8 +23,8 @@
 
     <insert id="insertTransLog" parameterType="com.example.order.bean.OrderLogPO">
         insert into t_trans_order_log
-            (trans_order_id,opt_type,tx_amt)
-        values (#{transOrderId},#{optType},#{txAmt})
+            (trans_order_id,opt_type,tx_amt,result_msg)
+        values (#{transOrderId},#{optType},#{txAmt},#{resultMsg})
     </insert>
 
 </mapper>

@@ -16,5 +16,6 @@ public class OrderLogPO {
     private String optType;
     private String txAmt;
     private String createTime;
+    private String resultMsg;
 
 }
