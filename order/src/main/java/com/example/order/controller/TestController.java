@@ -35,7 +35,8 @@ public class TestController {
 
     @RequestMapping("/testTransaction")
     public String testTransaction() {
-         transactionService.invoke();
+        String orderId = "888888";
+         transactionService.invoke(orderId);
          return "ok";
     }
 

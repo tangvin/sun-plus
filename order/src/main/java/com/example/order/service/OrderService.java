@@ -8,5 +8,5 @@ public interface OrderService {
 
 	OrderDetailsInfoPO findById(Integer id);
 
-	Map<String,String> addTransOrderInfo();
+	Map<String,String> addTransOrderInfo(String orderId);
 }

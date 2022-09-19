@@ -4,6 +4,7 @@ import com.example.order.annoation.OperationLogAnnotation;
 import com.example.order.bean.OrderDetailsInfoPO;
 import com.example.order.bean.OrderIndexPO;
 import com.example.order.bean.OrderLogPO;
+import com.example.order.component.OrderLogComponent;
 import com.example.order.mapper.*;
 import com.example.order.service.OrderLogService;
 import com.example.order.service.OrderService;
@@ -45,6 +46,8 @@ public class OrderServiceImpl implements OrderService {
     OrderLogService orderLogService;
     @Autowired
     OrderLogMapper orderLogMapper;
+    @Autowired
+    OrderLogComponent orderLogComponent;
 
     @Override
     public OrderDetailsInfoPO findById(Integer id) {
@@ -57,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     @OperationLogAnnotation(operModul = "交易中心-订单模块", operType = "新增", operDesc = "新增订单明细")
-    public Map<String, String> addTransOrderInfo() {
+    public Map<String, String> addTransOrderInfo(String orderId) {
 //        //明细表
 //        addOrderDetailsInfo();
 //        //index表
@@ -69,11 +72,9 @@ public class OrderServiceImpl implements OrderService {
             //明细表
             hashMap.put("message", "ok");
             addOrderDetailsInfo();
-            System.out.println("===========addOrderIndex()=============");
-            addOrderIndex();
             int o = 1 / 0;
         } catch (Exception e) {
-
+            orderLogComponent.recordMsgLog(orderId);
             throw e;
         }
         return hashMap;

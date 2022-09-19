@@ -27,10 +27,8 @@ public class TransactionServiceImpl implements TransactionService {
     OrderService orderService;
 
     @Override
-    public void invoke() {
-        Map<String, String> resultMap = orderService.addTransOrderInfo();
+    public void invoke(String orderId) {
+        Map<String, String> resultMap = orderService.addTransOrderInfo(orderId);
         System.out.println("========resultMap========="+resultMap);
-//        int j = orderLogService.addTransOrderLog();
-//        System.out.println("==========j====="+j);
     }
 }

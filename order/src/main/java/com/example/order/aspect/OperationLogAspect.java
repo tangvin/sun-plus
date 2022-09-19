@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.example.order.annoation.OperationLogAnnotation;
 import com.example.order.bean.OrderLogPO;
 import com.example.order.mapper.OrderLogMapper;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -68,11 +69,7 @@ public class OperationLogAspect {
         try {
             //将返回值转换成map集合
             Map<String, String> map = (Map<String, String>) result;
-            OrderLogPO transOrderLogPO = new OrderLogPO();
-            transOrderLogPO.setTransOrderId("666666");
-            transOrderLogPO.setOptType("1");
-            transOrderLogPO.setTxAmt("66666");
-            transOrderLogPO.setCreateTime("2022-09-19");
+
             // 从切面织入点处通过反射机制获取织入点处的方法
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();
             //获取切入点所在的方法
@@ -82,6 +79,19 @@ public class OperationLogAspect {
             if (annotation != null) {
                 System.out.println("*******operDesc******"+annotation.operDesc());
             }
+            Map<String, Object> params = new HashMap<>(8);
+            // 通过切点获取方法所有参数值["zhangSan", "123456"]
+            Object[] args = joinPoint.getArgs();
+            String[] names = signature.getParameterNames();
+            for (int i = 0; i < args.length; i++) {
+                params.put(names[i], args[i]);
+            }
+            System.out.println("params*************:"+params);
+            OrderLogPO transOrderLogPO = new OrderLogPO();
+            transOrderLogPO.setTransOrderId("666666");
+            transOrderLogPO.setOptType("1");
+            transOrderLogPO.setTxAmt("66666");
+            transOrderLogPO.setCreateTime("2022-09-19");
             transOrderLogPO.setResultMsg(map.get("message"));
             //保存日志
             int i = orderLogMapper.insertTransLog(transOrderLogPO);
@@ -116,11 +126,17 @@ public class OperationLogAspect {
             // 获取请求的方法名
             String methodName = method.getName();
             methodName = className + "." + methodName;
+            Map<String, Object> params = new HashMap<>(7);
+            // 通过切点获取方法所有参数值["zhangSan", "123456"]
+            Object[] args = joinPoint.getArgs();
+            String[] names = signature.getParameterNames();
+            for (int i = 0; i < args.length; i++) {
+                params.put(names[i], args[i]);
+            }
+            System.out.println("params*************:"+params);
             // 请求的参数
-            Map<String, String> rtnMap = convertMap(request.getParameterMap());
             // 将参数所在的数组转换成json
-            String params = JSON.toJSONString(rtnMap);
-            transOrderLogPO.setTransOrderId("666666");
+            transOrderLogPO.setTransOrderId((String) params.get("orderId"));
             transOrderLogPO.setOptType("1");
             transOrderLogPO.setTxAmt("66666");
             transOrderLogPO.setResultMsg(e.getMessage());
